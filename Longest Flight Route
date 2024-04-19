@@ -60,4 +60,4 @@ signed main() {
     }
 }
 
-/*Questão em que eu usei a técnica de recuperar a resposta numa DP*/
+/*Questão em que eu usei a técnica de recuperar a resposta numa DP.*/
