@@ -39,3 +39,5 @@ signed main() { op
     solve(1);
     cout << dp[1] << endl;
 }
+
+/*Dp básica de possibilidades, mas precisei tirar mod pra respostas.*/
