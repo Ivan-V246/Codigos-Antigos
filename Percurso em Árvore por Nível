@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define op ios::sync_with_stdio(false); cin.tie(NULL);
+#define INF 0x3f3f3f3f
+#define pii pair<int, int>
+#define ll long long
+#define mkp make_pair
+#define endl '\n'
+#define f first
+#define s second
+#define vi vector <int>
+#define int long long
+#define dbg(x) cout << #x << " " << x << endl;
+const int MAXN = 510;
+map <int, int> seg;
+int n;
+
+void update(int no, int valor){
+    if(!seg.count(no)) {
+        seg[no] = valor;
+        return;
+    } 
+
+    int esq = no*2, dir = esq+1;
+    if(valor > seg[no]) {
+        update(dir, valor);
+    } else {
+        update(esq, valor);
+    }
+}
+
+signed main() { op
+    int t; cin >> t;
+    for(int j = 1; j <= t; j++) {
+    cin >> n;
+    seg.clear();
+    for(int i = 0; i < n; i++) {
+        int a; cin >> a;
+        update(1, a);
+    }
+    queue <int> fila;
+    cout << "Case " << j << ':' << endl;
+    cout << seg[1];
+    fila.emplace(2);
+    fila.emplace(3);
+    while(!fila.empty()) {
+        int atual = fila.front();
+        fila.pop();
+        if(seg.count(atual)) {
+            cout << " " << seg[atual];
+            if(seg.count(atual*2)) {
+                fila.emplace(atual*2);
+            }
+            if(seg.count(atual*2+1)) {
+                fila.emplace(atual*2+1);
+            }
+        }
+    }
+    cout << endl << endl;
+    }
+}
+/*Implementação de uma BST e como passar pelos nós de uma ávore nivel a nivel com uma Bfs.*/
