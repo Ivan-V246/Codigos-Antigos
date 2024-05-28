@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define op ios::sync_with_stdio(false); cin.tie(NULL);
+#define INF 0x3f3f3f3f
+#define pii pair<int,int>
+#define ll long long
+#define mkp make_pair
+#define endl '\n'
+#define f first
+#define s second
+#define int long long
+#define dbg(x) cout << #x << " " << x << endl;
+const int MAXN = 1e6+10;
+const int MAXL = 18;
+const int mod = 1e9+10;
+int n;
+vector <pii> grafo[MAXN];
+int bl[MAXL][MAXN];
+int maior[MAXL][MAXN];
+int menor[MAXL][MAXN];
+int niv[MAXN];
+
+
+void dfs(int atual) {
+    for(auto x : grafo[atual]) {
+        if(niv[x.f] == -1) {
+            bl[0][x.f] = atual;
+            niv[x.f] = niv[atual] +1;
+            maior[0][x.f] = x.s;
+            menor[0][x.f] = x.s;
+            dfs(x.f); 
+        }
+    }
+}
+
+pii lca(int u, int v) {
+    if(niv[u] > niv[v]) swap(u, v);
+    int pulo = niv[v] - niv[u];
+    pii resp = mkp(maior[0][v], menor[0][v]);
+    for(int i = 31; i >= 0; i--) {
+        if((pulo | (1 << i)) == pulo) {
+            resp.f = max(resp.f, maior[i][v]);
+            resp.s = min(resp.s, menor[i][v]);
+            v = bl[i][v];
+        }
+    }
+    if(v == u) return resp;
+
+    for(int i = MAXL-1; i >= 0; i--) {
+        if(bl[i][u] != bl[i][v]) {
+            resp.f = max({resp.f, maior[i][u], maior[i][v]});
+            resp.s = min({resp.s, menor[i][u], menor[i][v]});
+            u = bl[i][u];
+            v = bl[i][v];
+        }
+    }
+
+    resp.f = max({resp.f, maior[0][u], maior[0][v]});
+    resp.s = min({resp.s, menor[0][u], menor[0][v]});
+
+    return resp;
+}
+
+signed main() { op
+    cin >> n;
+    for (int i = 1; i < n; i++) {
+        int a, b, c; cin >> a >> b >> c;
+        grafo[a].emplace_back(b, c);
+        grafo[b].emplace_back(a, c);
+    }
+    bl[0][1] = 1;
+    memset(niv, -1, sizeof niv);
+    niv[1] = 0;
+    dfs(1);
+    for(int i = 1; i < MAXL; i++) {
+        for(int u = 1; u <= n; u++) {
+            int a = bl[i-1][u];
+            int b = bl[i-1][a];
+            bl[i][u] = b;
+            maior[i][u] = max(maior[i-1][a], maior[i-1][u]);
+            menor[i][u] = min(menor[i-1][a], menor[i-1][u]);
+        }
+    }
+    int m; cin >> m;
+    for(int i = 0; i < m; i++) {
+        int a, b; cin >> a >> b;
+        pii ans = lca(a, b);
+        cout << ans.s << " " << ans.f << endl;
+    }
+}
