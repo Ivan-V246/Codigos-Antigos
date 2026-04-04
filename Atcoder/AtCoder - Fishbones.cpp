@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define op ios::sync_with_stdio(false); cin.tie(NULL);
+#define INF 0x3f3f3f3f
+#define pii pair<int,int>
+#define ll long long
+#define mkp make_pair
+#define endl '\n'
+#define f first
+#define s second
+#define int long long
+#define dbg(x) cout << #x << " " << x << endl;
+const int MAXN = 1e6+5;
+
+bool existe[15][15][30];
+
+signed main() { 
+    int n; cin >> n;
+    vector <pii> pos;
+    for(int i = 0; i < n; i++) {
+        int a, b; cin >> a >> b;
+        pos.emplace_back(a, b);
+    }
+    int m; cin >> m;
+    vector <string> words;
+    for(int i = 0; i < m; i++) {
+        string str; cin >> str;
+        words.emplace_back(str);
+        for(int j = 0; j < str.size(); j++) {
+            existe[str.size()][j+1][str[j]-'a'] = 1;
+        }
+    }
+
+    for(auto x : words) {
+        if(x.size() != n) {
+            cout << "No" << endl;
+            continue;
+        }
+        bool flag = 1;
+        for(int i = 0; i < n; i++) {
+            if(!existe[pos[i].first][pos[i].second][x[i] - 'a']) flag = 0;
+        }
+        cout << (flag ? "Yes" : "No") << endl;
+    }
+}
