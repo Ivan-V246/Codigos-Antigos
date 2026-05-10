@@ -14,17 +14,12 @@ const int MAXN = 1e6+5;
 
 
 signed main() { 
-    int t; cin >> t;
-    while(t--) {
-        int n, x; cin >> n >> x;
-        for(int i = 0; i < n; i++) {
-            int a; cin >> a;
-            if(a < x) {
-                cout << 1 << " ";
-            } else {
-                cout << 0 << " ";
-            }
-        }
-        cout << endl;
+    int n; cin >> n;
+    int soma = 0;
+    for(int i = 0; i < n; i++) {
+        int q, p; cin >> q >> p;
+        int sub = (q-p);
+        soma += sub*sub;
     }
+    cout << setprecision(50) << sqrt(soma) << endl;
 }
