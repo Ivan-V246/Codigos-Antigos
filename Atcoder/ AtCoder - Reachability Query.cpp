@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-
 #define ALL(x) x.begin(), x.end()
 #define DBG(x) cout << #x << " = " << x << endl;
 #define UNIQUE(c) (c).resize(unique(ALL(c)) - (c).begin())
@@ -14,10 +11,7 @@
 #define INF 0x3f3f3f3f
 #define INFLL 0x3f3f3f3f3f3f3f3f
 
-
-
 using namespace std;
-// using namespace __gnu_pbds;
 
 typedef long long ll;
 typedef unsigned long long ull;
